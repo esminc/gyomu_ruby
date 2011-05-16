@@ -50,7 +50,7 @@ module GyomuRuby
         def initialize(bucket)
           @bucket = bucket
           ::AWS::S3::Bucket.find(@bucket)
-        rescue AWS::S3::NoSuchBucket
+        rescue ::AWS::S3::NoSuchBucket
           ::AWS::S3::Bucket.create(@bucket)
         end
 
