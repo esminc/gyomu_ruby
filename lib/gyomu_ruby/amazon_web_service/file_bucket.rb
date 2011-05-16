@@ -1,5 +1,4 @@
 # coding: utf-8
-require 'aws/s3'
 
 module GyomuRuby
   module AmazonWebService
@@ -23,6 +22,7 @@ module GyomuRuby
         require 'fileutils'
 
         attr_reader :bucket
+
         def initialize(bucket)
           @bucket = bucket
           path = Rails.root.join('tmp', @bucket)
@@ -43,27 +43,31 @@ module GyomuRuby
       end
 
       class RichMan
+        require 'aws/s3'
+
         attr_reader :bucket
+
         def initialize(bucket)
           @bucket = bucket
-          AWS::S3::Bucket.find(@bucket)
+          ::AWS::S3::Bucket.find(@bucket)
         rescue AWS::S3::NoSuchBucket
-          AWS::S3::Bucket.create(@bucket)
+          ::AWS::S3::Bucket.create(@bucket)
         end
 
         def put(key, io)
-          AWS::S3::S3Object.store(key, io, @bucket)
+          ::AWS::S3::S3Object.store(key, io, @bucket)
         end
 
         def get(key)
-          AWS::S3::S3Object.value(key, @bucket) rescue nil
+          ::AWS::S3::S3Object.value(key, @bucket) rescue nil
         end
 
         def delete(key)
-          AWS::S3::S3Object.delete(key, @bucket) rescue false
+          ::AWS::S3::S3Object.delete(key, @bucket) rescue false
         end
       end
     end
   end
+
   AWS = AmazonWebService
 end
