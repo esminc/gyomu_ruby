@@ -1,4 +1,4 @@
-# coding: us-ascii
+# coding: utf-8
 
 module GyomuRuby
   module OrdinarySystemDevelopment

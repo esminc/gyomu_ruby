@@ -24,4 +24,3 @@ module GyomuRuby
     end
   end
 end
-
