@@ -5,7 +5,7 @@ module GyomuRuby
       module BizYear
         def biz_year(boundary_mon = 4, boundary_day = 1)
           now = self
-          if (now.month < boundary_mon) || (now.month == boundary_day && now.day == boundary_mon)
+          if (now.month < boundary_mon) || (now.month == boundary_mon && now.day < boundary_day)
             now.year - 1
           else
             now.year
