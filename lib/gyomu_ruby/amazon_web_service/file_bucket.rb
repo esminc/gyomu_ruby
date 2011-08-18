@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'securerandom'
 
 module GyomuRuby
   module AmazonWebService
@@ -13,7 +14,7 @@ module GyomuRuby
       end
 
       def put(io)
-        "#{Time.now.strftime('%Y%m%d%H%M')}_#{ActiveSupport::SecureRandom.hex(5)}".tap do |key|
+        "#{Time.now.strftime('%Y%m%d%H%M')}_#{SecureRandom.hex(5)}".tap do |key|
           @backend.put(key, io)
         end
       end
