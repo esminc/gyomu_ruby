@@ -19,7 +19,7 @@ class Forgery::JaName < Forgery
   end
 
   def self.last_name_with_kana
-    dictionaries[:ja_last_names].random
+    dictionaries[:ja_last_names].sample
   end
 
   def self.first_name
@@ -27,14 +27,14 @@ class Forgery::JaName < Forgery
   end
 
   def self.first_name_with_kana
-    [dictionaries[:ja_male_first_names], dictionaries[:ja_female_first_names]].random.random
+    [dictionaries[:ja_male_first_names], dictionaries[:ja_female_first_names]].sample.sample
   end
 
   def self.male_first_name_with_kana
-    dictionaries[:ja_male_first_names].random
+    dictionaries[:ja_male_first_names].sample
   end
 
   def self.female_first_name_with_kana
-    dictionaries[:ja_female_first_names].random
+    dictionaries[:ja_female_first_names].sample
   end
 end
