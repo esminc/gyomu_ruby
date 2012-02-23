@@ -2,12 +2,12 @@ module GyomuRuby
   module CoreExt
     module Numeric
       module Round
-        def roundup(offset)
-          ((self + offset) * Rational(1, offset)).ceil * offset - offset
+        def round_up(unit) # nodoc
+          ((self + unit) * Rational(1, unit)).ceil * unit - unit
         end
 
-        def rounddown(offset)
-          (self * Rational(1, offset)).floor * offset
+        def round_down(unit) # nodoc
+          (self * Rational(1, unit)).floor * unit
         end
       end
     end
