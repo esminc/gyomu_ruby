@@ -35,7 +35,7 @@ module GyomuRuby
         end
 
         def get(key)
-          File.open(Rails.root.join('tmp', @bucket, key), 'r:BINARY') {|f| f.read }
+          File.open(Rails.root.join('tmp', @bucket, key), 'r:BINARY') {|f| f.read } rescue nil
         end
 
         def delete(key)
