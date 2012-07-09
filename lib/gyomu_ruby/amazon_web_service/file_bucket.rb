@@ -1,5 +1,12 @@
 # coding: utf-8
 require 'securerandom'
+require 'forwardable'
+require 'aws/s3'
+
+begin
+  require 'magic'
+rescue LoadError
+end
 
 module GyomuRuby
   module AmazonWebService
@@ -44,9 +51,6 @@ module GyomuRuby
       end
 
       class RichMan
-        require 'aws/s3'
-        require 'magic'
-
         class << self
           def store_options(io)
             filetype_and_disposition(io)
@@ -55,8 +59,9 @@ module GyomuRuby
           private
 
           def filetype_and_disposition(io)
+            return {} unless (defined?(Magic) && io.respond_to?(:path))
+
             Hash.new.tap do |ret|
-              next unless io.respond_to?(:path)
               ret['content-type'] =  Magic.guess_file_mime_type(io.path)
               if ret['content-type'].split('/').first == 'image'
                 ret['content-disposition'] = 'inline'
