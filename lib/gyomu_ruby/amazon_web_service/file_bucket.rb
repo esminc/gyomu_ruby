@@ -45,7 +45,25 @@ module GyomuRuby
 
       class RichMan
         require 'aws/s3'
+        require 'magic'
 
+        class << self
+          def store_options(io)
+            filetype_and_disposition(io)
+          end
+
+          private
+
+          def filetype_and_disposition(io)
+            Hash.new.tap do |ret|
+              next unless io.respond_to?(:path)
+              ret['content-type'] =  Magic.guess_file_mime_type(io.path)
+              if ret['content-type'].split('/').first == 'image'
+                ret['content-disposition'] = 'inline'
+              end
+            end
+          end
+        end
         attr_reader :bucket
 
         def initialize(bucket)
@@ -56,7 +74,7 @@ module GyomuRuby
         end
 
         def put(key, io)
-          ::AWS::S3::S3Object.store(key, io, @bucket)
+          ::AWS::S3::S3Object.store(key, io, @bucket, self.class.store_options(io))
         end
 
         def get(key)
