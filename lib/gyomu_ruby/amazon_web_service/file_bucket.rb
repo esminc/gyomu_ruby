@@ -5,7 +5,7 @@ require 'aws/s3'
 
 begin
   require 'magic'
-rescue LoadError
+rescue LoadError, NameError
 end
 
 module GyomuRuby
