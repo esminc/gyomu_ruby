@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency("activesupport", [">= 3.0"])
   s.add_dependency("aws-s3", [">= 0"])
   s.add_dependency("magic")
+  s.add_dependency("moji")
 
   s.add_development_dependency "rspec", [">= 2.0"]
 end

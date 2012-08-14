@@ -22,6 +22,17 @@ module GyomuRuby
           subject { described_module.format_zipcode('234-5678') }
           it { should == '234-5678' }
         end
+
+        context 'when 7 digit number in Zenkaku' do
+          subject { described_module.format_zipcode('３４５６７８９') }
+          it { should == '345-6789' }
+        end
+
+        context 'when 3 digit and 4 digit number separated by hyphen in Zenkaku' do
+          subject { described_module.format_zipcode('４５６−７８９０') }
+          it { should == '456-7890' }
+        end
+
       end
 
       describe '.format with specified blank character' do
