@@ -8,11 +8,6 @@ module GyomuRuby
       let(:described_module) { described_class }
 
       describe '.format_zipcode' do
-        context 'when blank' do
-          subject { described_module.format_zipcode('') }
-          it { should be_blank }
-        end
-
         context 'when 7 digit number' do
           subject { described_module.format_zipcode('1234567') }
           it { should == '123-4567' }
@@ -33,11 +28,32 @@ module GyomuRuby
           it { should == '456-7890' }
         end
 
-      end
+        context 'when passed blank' do
+          context 'with empty string' do
+            subject { described_module.format_zipcode('') }
+            it { should == '' }
+          end
 
-      describe '.format with specified blank character' do
-        subject { described_module.format_zipcode('', '***') }
-        it { should == '***'}
+          context 'with nil' do
+            subject { described_module.format_zipcode(nil) }
+            it { should == '' }
+          end
+
+          context 'with  whitespace' do
+            subject { described_module.format_zipcode(' ') }
+            it { should == '' }
+          end
+
+          context 'with whitespaces' do
+            subject { described_module.format_zipcode(' ' * 4) }
+            it { should == '' }
+          end
+
+          context 'specified blank character' do
+            subject { described_module.format_zipcode('', '***') }
+            it { should == '***'}
+          end
+        end
       end
     end
   end
