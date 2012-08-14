@@ -1,4 +1,7 @@
 # coding: utf-8
+require 'active_support/core_ext'
+require 'moji'
+
 module GyomuRuby
   module OrdinarySystemDevelopment
     module AddressFormatter
@@ -17,7 +20,9 @@ module GyomuRuby
 
       def format_zipcode(zipcode_string, blank = '')
         return blank if zipcode_string.blank?
-        zipcode_string.sub(/\A(\d{3})(\d{4})\Z/){ "#{$1}-#{$2}" }
+        zipcode = Moji.zen_to_han(zipcode_string, Moji::NUMBER | Moji::SYMBOL)
+        digits_only = zipcode.scan(/\d/)
+        [digits_only[0..2], '-', digits_only[3..6]].flatten.join
       end
 
       def format_tel_no(telno_numeric_string, blank = '')
