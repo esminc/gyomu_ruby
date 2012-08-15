@@ -1,41 +1,31 @@
 # coding: utf-8
 require 'active_support/core_ext'
+require 'active_support/deprecation'
+require 'gyomu_ruby/address_formatter'
 require 'moji'
+
+require 'gyomu_ruby/deprecation'
 
 module GyomuRuby
   module OrdinarySystemDevelopment
     module AddressFormatter
-      PREFS = File.read(
-        File.expand_path('../../../masters/prefectures.csv', File.dirname(__FILE__))
-      ).lines.map(&:strip).freeze
-
-      ext_tel_numbers = File.read(
-        File.expand_path('../../../masters/ext_tel_numbers.csv', File.dirname(__FILE__))
-      ).lines.map{|n| "0#{n.strip}" }
-
-      EXT_TEL_NUMBERS = (ext_tel_numbers + %w[050 070 080 090 0120]).sort.reverse.freeze
-      EXT_TEL_NUMBERS_RE = /\A(#{EXT_TEL_NUMBERS.sort.reverse.join('|')})/uo
-
       module_function
 
       def format_zipcode(zipcode_string, blank = '')
-        return blank if zipcode_string.blank?
-        zipcode = Moji.zen_to_han(zipcode_string, Moji::NUMBER | Moji::SYMBOL)
-        digits_only = zipcode.scan(/\d/)
-        [digits_only[0..2], '-', digits_only[3..6]].flatten.join
+        GyomuRuby::Deprecation.deprecated_method_warning(:format_zipcode, "use GyomuRuby::AddressFormatter.format_zipcode instead")
+        GyomuRuby::AddressFormatter.format_zipcode(zipcode_string, blank)
       end
 
       def format_tel_no(telno_numeric_string, blank = '')
-        return blank if telno_numeric_string.blank?
-        telno_numeric_string.to_s.
-          sub(EXT_TEL_NUMBERS_RE){ "#{$1}-" }.
-          sub(/(\d{4})\Z/) { "-#{$1}" }
+        GyomuRuby::Deprecation.deprecated_method_warning(:format_tel_no, "use GyomuRuby::AddressFormatter.format_tel_no instead")
+        GyomuRuby::AddressFormatter.format_tel_no(telno_numeric_string, blank)
       end
 
       def prefecture_name(prefecture_code, blank = '')
-        return blank if prefecture_code.blank?
-        PREFS[prefecture_code.to_i - 1]
+        GyomuRuby::Deprecation.deprecated_method_warning(:prefecture_code, "use GyomuRuby::AddressFormatter.format_prefecture_name instead")
+        GyomuRuby::AddressFormatter.prefecture_name(prefecture_code, blank)
       end
+
     end
   end
 end
