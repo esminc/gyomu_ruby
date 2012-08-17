@@ -1,6 +1,9 @@
 # coding: utf-8
+
 require 'active_support/core_ext'
 require 'moji'
+
+require 'gyomu_ruby/deprecation'
 
 module GyomuRuby
   module AddressFormatter
@@ -22,8 +25,11 @@ module GyomuRuby
     end
 
     def prefecture_name(prefecture_code, blank = '')
+      GyomuRuby::Deprecation.deprecated_method_warning(:prefecture_name, "use GyomuRuby::MasterData.prefecture_name instead")
+
       return blank if prefecture_code.blank?
-      PREFS[prefecture_code.to_i - 1]
+
+      MasterData.prefecture_name(prefecture_code)
     end
   end
 end
