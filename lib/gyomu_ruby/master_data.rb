@@ -29,30 +29,30 @@ module GyomuRuby
       end
     end
 
-    class << self
-      def currency_name(code)
-        lookup(:currencies, code.to_s.upcase)
-      end
+    module_function
 
-      def prefecture_name(code)
-        lookup(:prefectures, "%02d" % code.to_i)
-      end
+    def currency_name(code)
+      lookup(:currencies, code.to_s.upcase)
+    end
 
-      def prefecture_codes_by_area(name)
-        lookup(:areas, name)
-      end
+    def prefecture_name(code)
+      lookup(:prefectures, "%02d" % code.to_i)
+    end
 
-      def lookup(type, val)
-        data(type)[val]
-      end
+    def prefecture_codes_by_area(name)
+      lookup(:areas, name)
+    end
 
-      def options_for_select(type)
-        data(type).invert.to_a # FIXME FormHelper にしたい
-      end
+    def lookup(type, val)
+      data(type)[val]
+    end
 
-      def data(type)
-        MasterData.class_variable_get("@@#{type}")
-      end
+    def options_for_select(type)
+      data(type).invert.to_a # FIXME FormHelper にしたい
+    end
+
+    def data(type)
+      MasterData.class_variable_get("@@#{type}")
     end
   end
 end
