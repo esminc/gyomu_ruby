@@ -1,12 +1,15 @@
 # coding: utf-8
 
+require 'active_support/deprecation'
+require 'active_support/core_ext/module'
+
 module GyomuRuby
   module MasterData
     autoload :FormHelper,        'gyomu_ruby/master_data/form_helper'
     autoload :FormBuilderHelper, 'gyomu_ruby/master_data/form_builder_helper'
 
     # ISO-4217 に従い、必要になるたびに足しています
-    @@currency = {
+    currencies = {
       'JPY' => '円',
       'USD' => '米ドル',
       'EUR' => 'ユーロ'
@@ -14,7 +17,7 @@ module GyomuRuby
 
     # JIS X 0401に定められた都道府県コードを定義
     #  東北、関東、、などの地域の括りは https://www.lasdec.or.jp/cms/1,0,14.html のものを参照している
-    @@prefecture, @@area = {}, {}
+    prefectures, areas = {}, {}
     {
       '北海道' => %w(北海道),
       '東北'   => %w(青森県 岩手県 宮城県 秋田県 山形県 福島県),
@@ -25,36 +28,36 @@ module GyomuRuby
       '四国'   => %w(徳島県 香川県 愛媛県 高知県),
       '九州'   => %w(福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県)
     }.each do |area_name, prefecture_names|
-      @@area[area_name] ||= []
+      areas[area_name] ||= []
 
-      prefecture_names.each.with_index(@@prefecture.length) do |prefecture_name, index|
+      prefecture_names.each.with_index(prefectures.length) do |prefecture_name, index|
         code = '%02d' % index.next
 
-        @@prefecture[code] = prefecture_name
-        @@area[area_name] << code
+        prefectures[code] = prefecture_name
+        areas[area_name] << code
       end
     end
+
+    mattr_accessor :data
+
+    self.data = {currencies: currencies, prefectures: prefectures, areas: areas}
 
     module_function
 
     def currency_name(code)
-      lookup(:currency, code.to_s.upcase)
+      lookup(:currencies, code.to_s.upcase)
     end
 
     def prefecture_name(code)
-      lookup(:prefecture, "%02d" % code.to_i)
+      lookup(:prefectures, "%02d" % code.to_i)
     end
 
     def prefecture_codes_by_area(name)
-      lookup(:area, name)
+      lookup(:areas, name)
     end
 
     def lookup(type, val)
-      data(type)[val]
-    end
-
-    def data(type)
-      MasterData.class_variable_get("@@#{type}")
+      MasterData.data[type.intern][val]
     end
   end
 end
