@@ -2,13 +2,16 @@
 
 module GyomuRuby
   module MasterData
-    @@currencies = {
+    autoload :FormHelper,        'gyomu_ruby/master_data/form_helper'
+    autoload :FormBuilderHelper, 'gyomu_ruby/master_data/form_builder_helper'
+
+    @@currency = {
       'JPY' => '円',
       'USD' => '米ドル',
       'EUR' => 'ユーロ'
     }
 
-    @@prefectures, @@areas = {}, {}
+    @@prefecture, @@area = {}, {}
     { # https://www.lasdec.or.jp/cms/1,0,14.html
       '北海道' => %w(北海道),
       '東北'   => %w(青森県 岩手県 宮城県 秋田県 山形県 福島県),
@@ -19,36 +22,32 @@ module GyomuRuby
       '四国'   => %w(徳島県 香川県 愛媛県 高知県),
       '九州'   => %w(福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県)
     }.each do |area_name, prefecture_names|
-      @@areas[area_name] ||= []
+      @@area[area_name] ||= []
 
-      prefecture_names.each.with_index(@@prefectures.length) do |prefecture_name, index|
+      prefecture_names.each.with_index(@@prefecture.length) do |prefecture_name, index|
         code = '%02d' % index.next
 
-        @@prefectures[code] = prefecture_name
-        @@areas[area_name] << code
+        @@prefecture[code] = prefecture_name
+        @@area[area_name] << code
       end
     end
 
     module_function
 
     def currency_name(code)
-      lookup(:currencies, code.to_s.upcase)
+      lookup(:currency, code.to_s.upcase)
     end
 
     def prefecture_name(code)
-      lookup(:prefectures, "%02d" % code.to_i)
+      lookup(:prefecture, "%02d" % code.to_i)
     end
 
     def prefecture_codes_by_area(name)
-      lookup(:areas, name)
+      lookup(:area, name)
     end
 
     def lookup(type, val)
       data(type)[val]
-    end
-
-    def options_for_select(type)
-      data(type).invert.to_a # FIXME FormHelper にしたい
     end
 
     def data(type)
