@@ -5,14 +5,17 @@ module GyomuRuby
     autoload :FormHelper,        'gyomu_ruby/master_data/form_helper'
     autoload :FormBuilderHelper, 'gyomu_ruby/master_data/form_builder_helper'
 
+    # ISO-4217 に従い、必要になるたびに足しています
     @@currency = {
       'JPY' => '円',
       'USD' => '米ドル',
       'EUR' => 'ユーロ'
     }
 
+    # JIS X 0401に定められた都道府県コードを定義
+    #  東北、関東、、などの地域の括りは https://www.lasdec.or.jp/cms/1,0,14.html のものを参照している
     @@prefecture, @@area = {}, {}
-    { # https://www.lasdec.or.jp/cms/1,0,14.html
+    {
       '北海道' => %w(北海道),
       '東北'   => %w(青森県 岩手県 宮城県 秋田県 山形県 福島県),
       '関東'   => %w(茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県),
