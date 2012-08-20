@@ -3,13 +3,11 @@
 module GyomuRuby
   module MasterData
     module FormBuilderHelper
-      include FormHelper
-
       [:prefecture, :currency].each do |master|
-        define_method %(#{master}_select) do |attribute, options = {}, html_options = {}|
-          choices = __send__("options_for_#{master}_select")
+        define_method %(#{master}_select) do |attribute, options = {}, html_options = {}, &block|
+          choices = FormHelper.__send__("options_for_#{master}_select")
 
-          select(attribute, choices, options, html_options)
+          select(attribute, choices, options, html_options, &block)
         end
       end
     end
