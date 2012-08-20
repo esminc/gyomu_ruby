@@ -10,6 +10,6 @@ module GyomuRuby
 
   # DEPRECATED
   osd_dir = 'gyomu_ruby/ordinary_system_development'
-  autoload :OrdinarySystemDdevelopment, osd_dir
+  autoload :OrdinarySystemDevelopment, osd_dir
   autoload :OSD,                        osd_dir
 end
