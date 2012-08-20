@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
-require 'gyomu_ruby/address_formatter'
 
 module GyomuRuby
   describe AddressFormatter do

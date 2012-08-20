@@ -1,8 +1,4 @@
 # coding: utf-8
-require 'active_support/core_ext'
-require 'active_support/deprecation'
-require 'gyomu_ruby/address_formatter'
-require 'moji'
 
 require 'gyomu_ruby/deprecation'
 

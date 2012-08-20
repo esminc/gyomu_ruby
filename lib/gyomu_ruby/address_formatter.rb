@@ -1,9 +1,16 @@
 # coding: utf-8
+
 require 'active_support/core_ext'
 require 'moji'
 
 module GyomuRuby
   module AddressFormatter
+    ext_tel_numbers = File.read(
+      File.expand_path('../../masters/ext_tel_numbers.csv', File.dirname(__FILE__))
+    ).lines.map{|n| "0#{n.strip}" }
+
+    EXT_TEL_NUMBERS    = (ext_tel_numbers + %w[050 070 080 090 0120]).sort.reverse.freeze
+    EXT_TEL_NUMBERS_RE = /\A(#{EXT_TEL_NUMBERS.sort.reverse.join('|')})/uo
 
     module_function
 
@@ -22,8 +29,11 @@ module GyomuRuby
     end
 
     def prefecture_name(prefecture_code, blank = '')
+      GyomuRuby::Deprecation.deprecated_method_warning(:prefecture_name, "use GyomuRuby::MasterData.prefecture_name instead")
+
       return blank if prefecture_code.blank?
-      PREFS[prefecture_code.to_i - 1]
+
+      MasterData.prefecture_name(prefecture_code)
     end
   end
 end
