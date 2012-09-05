@@ -12,7 +12,7 @@ module GyomuRuby
           end
         end
 
-        def quater?(n)
+        def quarter?(n)
           n == case self.month
                when 4..6   then 1
                when 7..9   then 2
