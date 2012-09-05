@@ -1,5 +1,6 @@
 # coding: utf-8
-module GyomuRuby::OrdinarySystemDevelopment
+
+module GyomuRuby
   class Translation
     def self.source(word, scope)
       new('ja').source(word, scope)
