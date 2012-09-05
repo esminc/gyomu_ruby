@@ -24,8 +24,8 @@ module GyomuRuby
         constant
       end
 
-      def deprecated(name, valid_constant)
-        @__new_constants.update name => valid_constant
+      def deprecated(name, new_constant)
+        @__new_constants.update name => new_constant
       end
     end
   end
