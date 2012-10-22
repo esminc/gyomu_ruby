@@ -74,8 +74,12 @@ module GyomuRuby
         def initialize(bucket)
           @bucket = bucket
           ::AWS::S3::Bucket.find(@bucket)
-        rescue ::AWS::S3::NoSuchBucket
-          ::AWS::S3::Bucket.create(@bucket)
+        rescue => ex
+          if ex.class.name == 'AWS::S3::NoSuchBucket'
+            ::AWS::S3::Bucket.create(@bucket)
+          else
+            raise ex
+          end
         end
 
         def put(key, io)
