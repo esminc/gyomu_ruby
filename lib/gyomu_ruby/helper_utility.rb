@@ -12,13 +12,14 @@ module GyomuRuby::HelperUtility
     [controller_name, action_name].join('#').in?(Array(signatures))
   end
 
-  def nice_datetime_duration(from, to)
+  def nice_datetime_duration(from, to, join_word = ' - ')
     from, to = [from, to].map(&:localtime)
+
     if from.localtime.to_date == to.localtime.to_date
       [l(from), to.strftime("%H:%M")]
     else
       [l(from), l(to)]
-    end.join(' - ')
+    end.join(join_word)
   end
 
   def with_paging(objects, opts = {}, &block)
