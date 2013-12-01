@@ -53,5 +53,53 @@ module GyomuRuby
         end
       end
     end
+
+    describe '.format_tel_no' do
+      let(:telno_numeric_string) { '03123456' }
+
+      subject { described_module.format_tel_no(telno_numeric_string) }
+
+      context 'when passed blank' do
+        before do
+          telno_numeric_string.stub(:blank?).and_return(true)
+        end
+
+        it { should eq '' }
+      end
+
+      context 'when valid area code' do
+        context 'when more than 4 digit number after area code' do
+          let(:telno_numeric_string) { '03123456' }
+          it { should eq '03-12-3456' }
+        end
+
+        context 'when 4 digit number after area code' do
+          let(:telno_numeric_string) { '031234' }
+          it { should eq '03--1234' }
+        end
+
+        context 'when less than or equal to 4 digit number after area code' do
+          let(:telno_numeric_string) { '03123' }
+          it { should eq '03-123' }
+        end
+      end
+
+      context 'when invalid area code' do
+        context 'when more than 4 digit number' do
+          let(:telno_numeric_string) { '00000' }
+          it { should eq '0-0000' }
+        end
+
+        context 'when 4 digit number' do
+          let(:telno_numeric_string) { '0000' }
+          it { should eq '-0000' }
+        end
+
+        context 'when less than 4 digit number' do
+          let(:telno_numeric_string) { '000' }
+          it { should eq '000' }
+        end
+      end
+    end
   end
 end
