@@ -6,7 +6,7 @@ describe GyomuRuby::AWS::FileBucket::RichMan do
   describe '.store_options' do
     let(:options) { GyomuRuby::AWS::FileBucket::RichMan.store_options(content) }
     let(:root) { Pathname.new(File.dirname(__FILE__) + '/../../') }
-    subject &:options
+    subject { options }
 
     context 'store Image files' do
       let(:content) { File.open(root + 'spec/fixtures/images/esm-gravater.png', 'r:BINARY') }
