@@ -1,3 +1,7 @@
+# Version 0.0.6
+
+Remove GyomuRuby::AWS::FileBucket use fog (or so) directly
+
 # Version 0.0.5
 
 * rename Integer#ceil(offset), Integer#floor(offset) to Numeric#roundup(offset), Numeric#rounddown(offset)
