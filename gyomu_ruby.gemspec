@@ -6,9 +6,8 @@ Gem::Specification.new do |s|
   s.name        = 'gyomu_ruby'
   s.version     = GyomuRuby::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ['Eiwa System Management, Inc.']
-  s.email       = ['rubyagile@qwik.tky.esm.co.jp']
-  s.homepage    = 'http://www.esm.co.jp/'
+  s.authors     = ['ESM, Inc.']
+  s.homepage    = 'https://agile.esm.co.jp/'
   s.summary     = %q{GyomuRuby}
   s.description = %q{GyomuRuby}
 
